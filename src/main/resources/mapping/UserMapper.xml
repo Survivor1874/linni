@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id="selectById" parameterType="integer" resultMap="BaseResultMap">
-        select * from user where id = #{id}
+        select name from user where id = #{id}
     </select>
 
 </mapper>
