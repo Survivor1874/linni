@@ -2,6 +2,8 @@ package com.learn.linni.common.entity.user;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author linjun.li@quvideo.com
  * @date 2018-12-21 15:58
@@ -9,13 +11,15 @@ import lombok.Data;
 @Data
 public class User {
 
-    private Long id;
+    private Integer id;
 
-    private String name;
+    private String username;
 
-    private Integer age;
+    private Date birthday;
 
-    private String email;
+    private String sex;
+
+    private String address;
 
 
 }
