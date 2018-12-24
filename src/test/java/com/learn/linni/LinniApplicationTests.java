@@ -30,18 +30,22 @@ public class LinniApplicationTests {
 	public void insertListTest() {
 		List<User> list = new ArrayList<>(3);
 		User user1 = new User();
-		user1.setUsername("yihao");
+		user1.setUsername("一号");
 		user1.setAddress("9090");
+		user1.setBirthday(new Date());
 		User user2 = new User();
-		user2.setUsername("erhao");
+		user2.setUsername("二号");
 		user2.setAddress("9090");
+		user2.setBirthday(new Date());
 		User user3 = new User();
-		user3.setUsername("sanhao");
+		user3.setUsername("三号");
 		user3.setAddress("9090");
+		user3.setBirthday(new Date());
 		list.add(user1);
 		list.add(user2);
 		list.add(user3);
-		Integer count = userMapper.insterList(list);
+		//Integer count = userMapper.insterList(list);
+		Integer count = userMapper.testInsertList(list);
 
 		System.out.println("返回成功的数量:" + count);
 	}
@@ -51,8 +55,9 @@ public class LinniApplicationTests {
 		User user = new User();
 		user.setId(37);
 		user.setUsername("linjun4");
-		user.setBirthday(new Date());
-		Integer count = userMapper.updateByUser(user);
+		user.setAddress("1245");
+	//	Integer count = userMapper.updateByUser(user);
+		Integer count = userMapper.testUpdateByUser(user);
 		System.out.println("成功修改的数量:" + count);
 	}
 
@@ -62,8 +67,18 @@ public class LinniApplicationTests {
 		User user = new User();
 		user.setUsername("linjun9");
 		user.setBirthday(new Date());
-		Integer count = userMapper.insertUser(user);
+		user.setAddress("1");
+		Integer count = userMapper.testInsertUser(user);
 		System.out.println("插入了一条数据:"+count);
+	}
+
+	@Test
+	public void testByUser(){
+		User user=new User();
+		user.setSex("2");
+		List<User> users = userMapper.testByUser(user);
+		String userst = JSON.toJSONString(users);
+		System.out.println(userst);
 	}
 
 

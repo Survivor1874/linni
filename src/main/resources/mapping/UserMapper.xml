@@ -14,7 +14,6 @@
         select *from user where id = #{id}
     </select>
 
-
     <insert id="insterList" parameterType="java.util.List" >
         insert into `user` (username,birthday,sex,address) values
         <foreach collection="list" separator="," item="user" index="index">
@@ -54,10 +53,9 @@
         </trim>
     </insert>
 
-
     <update id="updateByUser" parameterType="com.learn.linni.common.entity.user.User" >
         update `user`
-        <trim prefix="set" suffixOverrides=",">
+        <trim prefix="set" suffixOverrides="," >
         <if test="username!=null">
             username=#{username},
         </if>
@@ -73,5 +71,81 @@
         </trim>
        where id=#{id}
     </update>
+
+    <insert id="testInsertList" parameterType="java.util.List" >
+        insert into `user` (username,birthday,sex,address) values
+        <foreach collection="list" separator="," item="user" index="index">
+            (#{user.username},#{user.birthday},#{user.sex},#{user.address})
+        </foreach>
+    </insert>
+
+    <update id="testUpdateByUser" parameterType="com.learn.linni.common.entity.user.User">
+        update `user` set
+        <trim suffixOverrides="," >
+        <if test="username!=null">
+            username=#{username},
+        </if>
+        <if test="birthday!=null">
+            birthday=#{birthday},
+        </if>
+        <if test="sex!=null">
+            sex=#{sex},
+        </if>
+        <if test="address!=null">
+            address=#{address}
+        </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <insert id="testInsertUser" parameterType="com.learn.linni.common.entity.user.User" >
+        insert into `user`
+        <trim prefix="(" suffixOverrides="," suffix=")" >
+            <if test="username!=null">
+                username,
+            </if>
+            <if test="address!=null">
+                address,
+            </if>
+            <if test="sex!=null">
+                sex,
+            </if>
+            <if test="birthday!=null">
+                birthday,
+             </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username!=null">
+                #{username},
+            </if>
+            <if test="address!=null">
+                #{address},
+            </if>
+            <if test="sex!=null">
+                #{sex},
+            </if>
+            <if test="birthday!=null">
+                #{birthday},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="testByUser" parameterType="com.learn.linni.common.entity.user.User" resultMap="BaseResultMap">
+        select * from `user`
+        <where>
+            <if test="username!=null">
+                username=#{username}
+            </if>
+            <if test="birthday!=null">
+                 birthday=#{birthday}
+            </if>
+            <if test="sex!=null">
+                 sex=#{sex}
+            </if>
+            <if test="address!=null">
+                address=#{address}
+             </if>
+        </where>
+    </select>
 
 </mapper>

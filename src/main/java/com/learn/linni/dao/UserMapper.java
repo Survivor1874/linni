@@ -21,6 +21,7 @@ public interface UserMapper {
      * @return 插入成功的数量
      */
     Integer insterList(List<User> list);
+    Integer testInsertList(List<User> list);
 
     /**
      * 修改User
@@ -28,6 +29,7 @@ public interface UserMapper {
      * @return 修改成功的数量
      */
     Integer updateByUser(User user);
+    Integer testUpdateByUser(User user);
 
     /**
      * 插入一个User数据
@@ -35,5 +37,13 @@ public interface UserMapper {
      * @return 插入成功的数量
      */
     Integer insertUser(User user);
+    Integer testInsertUser(User user);
+
+    /**
+     * 查询符合条件的User
+     * @param user 条件
+     * @return 符合条件的User
+     */
+    List<User> testByUser(User user);
 
 }
