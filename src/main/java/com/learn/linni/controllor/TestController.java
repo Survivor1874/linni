@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.learn.linni.common.entity.user.User;
 import com.learn.linni.dao.UserMapper;
 import com.learn.linni.service.RedisService;
+import com.learn.linni.service.UserService;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,9 @@ public class TestController {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping("/test")
     public String test(){
@@ -38,7 +42,7 @@ public class TestController {
     @GetMapping("/selectById")
     public String  selectById(){
         Integer id = 10;
-        String usertr = redisService.selectById(id);
+        String usertr = userService.selectById(id);
         return usertr;
     }
 
