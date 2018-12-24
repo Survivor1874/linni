@@ -81,6 +81,15 @@ public class LinniApplicationTests {
 		System.out.println(userst);
 	}
 
+	@Test
+	public void selectByIdTest(){
+		int   id=37;
+		User user = userMapper.selectById(id);
+		String usert = JSON.toJSONString(user);
+		System.out.println(usert);
+	}
+
+
 
 }
 
