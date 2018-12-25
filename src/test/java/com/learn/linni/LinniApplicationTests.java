@@ -7,11 +7,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,6 +22,9 @@ public class LinniApplicationTests {
 
 	@Autowired
 	private UserMapper userMapper;
+
+	@Autowired
+	private RedisTemplate<String, Long>  longRedisTemplate;
 
 	@Test
 	public void contextLoads() {
@@ -87,6 +93,13 @@ public class LinniApplicationTests {
 		User user = userMapper.selectById(id);
 		String usert = JSON.toJSONString(user);
 		System.out.println(usert);
+	}
+
+	@Test
+	public  void longTest(){
+		ValueOperations<String, Long> opsForValue = longRedisTemplate.opsForValue();
+		opsForValue.set("key1",78L,15000, TimeUnit.MINUTES);
+
 	}
 
 

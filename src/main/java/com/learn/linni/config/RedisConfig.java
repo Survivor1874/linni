@@ -34,6 +34,36 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+
+    /**
+     * 实例化 RedisTemplate 对象
+     *
+     * @return
+     */
+    @Bean
+    public RedisTemplate<String, Long> longStringRedisTemplate() {
+        RedisTemplate<String, Long> longRedisTemplate = new RedisTemplate<>();
+        initLongRedisTemplate(longRedisTemplate, redisConnectionFactory);
+        return longRedisTemplate;
+    }
+
+    /**
+     * 设置数据存入 redis 的序列化方式
+     *
+     * @param longRedisTemplate
+     * @param factory
+     */
+    private void initLongRedisTemplate(RedisTemplate<String, Long> longRedisTemplate, RedisConnectionFactory factory) {
+        longRedisTemplate.setKeySerializer(new StringRedisSerializer());
+        longRedisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        longRedisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        longRedisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        longRedisTemplate.setConnectionFactory(factory);
+    }
+
+
+
+
     /**
      * 设置数据存入 redis 的序列化方式
      *
@@ -59,6 +89,7 @@ public class RedisConfig {
         return redisTemplate.opsForHash();
     }
 
+
     /**
      * 实例化 ValueOperations 对象,可以使用 String 操作
      *
@@ -68,6 +99,17 @@ public class RedisConfig {
     @Bean
     public ValueOperations<String, Object> valueOperations(RedisTemplate<String, Object> redisTemplate) {
         return redisTemplate.opsForValue();
+    }
+
+    /**
+     * 实例化 ValueOperations 对象,可以使用 String 操作
+     *
+     * @param longRedisTemplate
+     * @return
+     */
+    @Bean
+    public ValueOperations<String, Long> valueOperationsLong(RedisTemplate<String, Long> longRedisTemplate) {
+        return longRedisTemplate.opsForValue();
     }
 
     /**
