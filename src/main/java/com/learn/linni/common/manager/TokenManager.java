@@ -1,7 +1,8 @@
 package com.learn.linni.common.manager;
 
 
-import com.learn.linni.common.modle.TokenModel;
+import com.learn.linni.common.entity.user.User;
+import com.learn.linni.common.model.TokenModel;
 
 /**
  * 对Token进行操作的接口
@@ -15,7 +16,7 @@ public interface TokenManager {
      * @param userId 指定用户的id
      * @return 生成的token
      */
-    public TokenModel createToken(long userId);
+    public TokenModel createToken(int userId);
 
     /**
      * 检查token是否有效
@@ -36,5 +37,11 @@ public interface TokenManager {
      * @param userId 登录用户的id
      */
     public void deleteToken(long userId);
+
+
+
+    public void setResid(Long id, User user);
+
+    public User getRedis(Long id);
 
 }

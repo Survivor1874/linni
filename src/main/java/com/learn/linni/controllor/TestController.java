@@ -2,6 +2,7 @@ package com.learn.linni.controllor;
 
 
 
+import com.learn.linni.common.annotation.Authorization;
 import com.learn.linni.common.entity.user.User;
 import com.learn.linni.dao.UserMapper;
 import com.learn.linni.service.UserService;
@@ -19,6 +20,7 @@ public class TestController {
     private UserService userService;
 
 
+
     @GetMapping("/test")
     public String test(){
       //  return "aaa";
@@ -30,7 +32,7 @@ public class TestController {
     }
 
 
-
+    @Authorization
    @RequestMapping(value="/selectById/{id}",method = RequestMethod.GET ,produces =  "application/json")
     public User  selectById(@PathVariable("id") int id){
        //  Integer  id = 29;

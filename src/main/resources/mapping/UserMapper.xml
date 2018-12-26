@@ -4,14 +4,17 @@
 
     <resultMap id="BaseResultMap" type="com.learn.linni.common.entity.user.User">
         <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="password" jdbcType="INTEGER" property="password" />
         <result column="username" jdbcType="VARCHAR" property="username" />
         <result column="birthday" jdbcType="DATE" property="birthday" />
         <result column="sex" jdbcType="CHAR" property="sex" />
         <result column="address" jdbcType="VARCHAR" property="address" />
     </resultMap>
 
+
+
     <select id="selectById" parameterType="integer" resultMap="BaseResultMap">
-        select *from user where id = #{id}
+        select *from `user` where id = #{id}
     </select>
 
     <insert id="insterList" parameterType="java.util.List" >
