@@ -34,6 +34,8 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+
+
     /**
      * 设置数据存入 redis 的序列化方式
      *

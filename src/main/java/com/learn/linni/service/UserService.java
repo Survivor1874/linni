@@ -36,6 +36,7 @@ public class UserService {
         if(null==user){
             //如果缓存里没查到,则从数据库里查,然后存入缓存
             user = userMapper.selectById(id);
+            user = userMapper.selectById(id);
             if(null != user){
                 usertr= JSON.toJSONString(user);
                 opsForValue.set(key, usertr);

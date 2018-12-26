@@ -1,14 +1,16 @@
 package com.learn.linni.common.manager.impl;
 
 
+import com.alibaba.fastjson.JSON;
+import com.learn.linni.common.entity.user.User;
 import com.learn.linni.common.manager.TokenManager;
-import com.learn.linni.common.modle.TokenModel;
+import com.learn.linni.common.model.TokenModel;
 import com.learn.linni.config.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +29,7 @@ public class RedisTokenManager implements TokenManager {
     private RedisTemplate<String, Object> redisTemplate;
 
 
+
   /*  @Autowired
     public void setRedis( RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -34,11 +37,12 @@ public class RedisTokenManager implements TokenManager {
         redisTemplate.setKeySerializer(new JdkSerializationRedisSerializer());
     }*/
 
-    public TokenModel createToken(long userId) {
+    public TokenModel createToken(int userId) {
         //使用uuid作为源token
         String token = UUID.randomUUID().toString().replace("-", "");
         TokenModel model = new TokenModel(userId, token);
         String userIdSt=String.valueOf(userId);
+        userIdSt="redis:userId:"+userIdSt;
         //存储到redis并设置过期时间
         redisTemplate.boundValueOps(userIdSt).set(token, Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
         return model;
@@ -53,7 +57,8 @@ public class RedisTokenManager implements TokenManager {
             return null;
         }
         //使用userId和源token简单拼接成的token，可以增加加密措施
-        long userId = Long.parseLong(param[0]);
+      //  int userId = Integer.parseInteger(param[0]);
+        int userId=Integer.valueOf(param[0]).intValue();
         String token = param[1];
         return new TokenModel(userId, token);
     }
@@ -76,5 +81,37 @@ public class RedisTokenManager implements TokenManager {
 
     public void deleteToken(long userId) {
         redisTemplate.delete(String.valueOf(userId));
+    }
+
+
+    /**
+     * 新增缓存里的user
+     * @param id
+     * @param user
+     */
+    @Override
+    public void setResid(Long id, User user) {
+        String userSt = JSON.toJSONString(user);
+        String key="user:id:"+id;
+       ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
+        opsForValue.set(key,userSt);
+        System.out.println("插入缓存成功"+key);
+    }
+    /**
+     * 根据id查询缓存里的user
+     * @param id
+     */
+    @Override
+    public User getRedis(Long id){
+        String key="user:id:"+id;
+        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
+        String users = (String)opsForValue.get(key);
+        //    User user = com.alibaba.fastjson.JSON.parseObject(users, User.class);
+        User user = JSON.parseObject(users, User.class);
+        if(!StringUtils.isEmpty(users)){
+            System.out.println("从缓存里查出了user"+key);
+        }
+
+        return user;
     }
 }
