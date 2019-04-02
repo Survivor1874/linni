@@ -1,6 +1,7 @@
 package com.learn.linni.common.entity.user;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
  * @date 2018-12-21 15:58
  **/
 @Data
+@EqualsAndHashCode
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
