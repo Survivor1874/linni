@@ -72,7 +72,6 @@ public class LinniApplicationTests {
 	public void insertUser(){
 		User user = new User();
 		user.setUsername("linjun9");
-		user.setBirthday(new Date());
 		user.setAddress("1");
 		Integer count = userMapper.testInsertUser(user);
 		System.out.println("插入了一条数据:"+count);

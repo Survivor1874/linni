@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 校验身份证是否合格
  * Created by @毛瑞 on 2019/4/2.
  * @see <a href="https://30ke.cn">三十课</a>
  */
