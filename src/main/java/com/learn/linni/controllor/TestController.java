@@ -24,7 +24,7 @@ public class TestController {
     @GetMapping("/test")
     public String test(){
       //  return "aaa";
-       return getHellow();
+        throw new NullPointerException();
     }
 
     public String getHellow(){
